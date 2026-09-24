@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /old/
+
+Sitemap: https://oneurolinguista.com.br/sitemap.xml
