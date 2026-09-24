@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initSlider();
     initCookieConsent();
     initVideos();
+    initCurrentYear();
 });
 
 function initHeader() {
@@ -109,12 +110,12 @@ function initSmoothScroll() {
         });
     });
 
-    // Vindo de outra página (index.html#audios): o navegador pula direto para o
+    // Vindo de outra página (/#audios): o navegador pula direto para o
     // card, então reajusta com a mesma regra depois que as imagens carregam.
     const hashTarget = window.location.hash && document.querySelector(window.location.hash);
     if (hashTarget && hashTarget.hasAttribute('data-anchor-section')) {
         window.addEventListener('load', function() {
-            scrollToTarget(hashTarget, 'auto');
+            scrollToTarget(hashTarget, 'instant');
         });
     }
 }
@@ -309,8 +310,8 @@ function setConsent(status) {
 }
 
 function initCookieConsent() {
-    const policyLink = document.querySelector('a[href$="politica-de-privacidade.html"]');
-    const policyHref = policyLink ? policyLink.getAttribute('href') : 'politica-de-privacidade.html';
+    const policyLink = document.querySelector('a[href$="/politica-de-privacidade"]');
+    const policyHref = policyLink ? policyLink.getAttribute('href') : '/politica-de-privacidade';
 
     const banner = document.createElement('div');
     banner.className = 'cookie-banner';
@@ -382,5 +383,13 @@ function initVideos() {
                 window.showCookieBanner?.();
             }
         });
+    });
+}
+
+// Ano do copyright sempre atual (o HTML traz um ano fixo como reserva sem JS)
+function initCurrentYear() {
+    const year = new Date().getFullYear();
+    document.querySelectorAll('[data-ano-atual]').forEach(function(el) {
+        el.textContent = year;
     });
 }
